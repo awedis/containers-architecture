@@ -31,4 +31,4 @@ src
 #### APIs:
 - Method: GET | Path: /api/path-one
 - Method: GET | Path: /api/path-two (will communicate with our private container-process)
-- Method: POST | Path: /api/send-message (will send SQS message) (takes message attribute inside the boody: the message that needs to be send)
+- Method: POST | Path: /api/send-message (will send SQS message) (takes message attribute inside the body: the message that needs to be send)
