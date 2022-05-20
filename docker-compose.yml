@@ -1,0 +1,67 @@
+version: '3'
+x-environment:
+  &default-environment
+  AWS_REGION: ${AWS_REGION}
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  AWS_XRAY_DAEMON_ADDRESS: xray:2000
+  MAIN_SQS_QUEUE_URL: ${MAIN_SQS_QUEUE_URL}
+services:
+  xray:
+    image: ${XRAY_IMAGE}
+    container_name: XRAY
+    build:
+      context: ./container-xray
+      dockerfile: ./Dockerfile
+    environment: *default-environment
+    command: --local-mode
+    ports:
+      - "2000:2000/udp"
+    networks:
+      mynet:
+        ipv4_address: 172.19.20.1
+        
+  main:
+    image: ${MAIN_IMAGE}
+    container_name: MAIN
+    build:
+      context: ./container-main
+      dockerfile: ./Dockerfile
+    depends_on:
+      - xray
+    ports:
+      - "8080:8080"
+    environment: *default-environment
+    networks:
+      mynet:
+        ipv4_address: 172.19.10.1
+
+  consume:
+    image: ${CONSUME_IMAGE}
+    container_name: CONSUME
+    build:
+      context: ./container-consume
+      dockerfile: ./Dockerfile
+    environment: *default-environment
+    networks:
+      mynet:
+        ipv4_address: 172.19.10.2
+
+  process:
+    image: ${PROCESS_IMAGE}
+    container_name: PROCESS
+    build:
+      context: ./container-process
+      dockerfile: ./Dockerfile
+    environment: *default-environment
+    networks:
+      mynet:
+        ipv4_address: 172.19.10.3
+
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/16

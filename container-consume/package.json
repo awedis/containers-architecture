@@ -1,0 +1,15 @@
+{
+  "name": "container-consume",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1122.0",
+    "aws-xray-sdk": "^3.3.5",
+    "body-parser": "^1.20.0",
+    "express": "^4.17.3",
+    "sqs-consumer": "^5.7.0"
+  }
+}

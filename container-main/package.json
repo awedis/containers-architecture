@@ -1,0 +1,16 @@
+{
+  "name": "container-main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1134.0",
+    "aws-xray-sdk-core": "^3.3.5",
+    "aws-xray-sdk-express": "^3.3.5",
+    "axios": "^0.27.1",
+    "body-parser": "^1.20.0",
+    "express": "^4.17.3"
+  }
+}
